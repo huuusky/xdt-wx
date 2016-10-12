@@ -1,0 +1,46 @@
+<% orders.forEach(function (order) { %>
+<div class="order">
+    <div class="order-header">
+        <div class="row no-horizontal-padded">
+            <div class="col col-9">
+                <span class="order-number">订单编号：<%= order.orderNo %></span>
+            </div>
+            <div class="col col-3 text-right">
+                <span class="orange"><%= order.status %></span>
+            </div>
+        </div>
+    </div>
+    <div class="order-content">
+        <div class="row no-padding">
+            <div class="col col-8">
+                <span><%= order.shopName %></span>
+                <% order.title.forEach(function (item) { %>
+                <p> • <%= item %></p>
+                <% }); %>
+            </div>
+            <div class="col col-4 text-right">
+                <span class="orange">¥<%= order.totalAmount %></span>
+            </div>
+        </div>
+        <div class="row no-padding">
+            <div class="col col-4">
+                <span><%= order.carLicenseNumber %></span>
+            </div>
+            <div class="col col-8 text-right">
+                <span class="order-submit-time"><%= order.gmtCreate %></span>
+            </div>
+        </div>
+    </div>
+    <div class="order-footer">
+        <div class="row no-horizontal-padded">
+            <div class="col col-4">
+                <span class="order-service-count">共2项服务</span>
+            </div>
+            <div class="col col-8 text-right">
+                <a href="#" class="btn btn-tiny-warning inline">取消订单</a>
+                <a href="#" class="btn btn-tiny-plain inline">去付款</a>
+            </div>
+        </div>
+    </div>
+</div>
+<% }); %>

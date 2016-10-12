@@ -1,0 +1,21 @@
+<header class="bar bar-nav">
+    <a href="#my" class="icon icon-left-nav pull-left"></a>
+    <h4 class="title">选 择 品 牌</h4>
+</header>
+<div class="content">
+    <% carBrandGroups.forEach(function (carGroup) { %>
+    <div class="list-group">
+        <div class="gray-title"><%= carGroup.firstLetter %></div>
+        <ul class="list-link-view no-gutter">
+            <% carGroup.carsBrands.forEach(function (carsBrand) { %>
+            <li>
+                <a class="link-list-item" href="#car-series/<%= carsBrand.brandId %>">
+                    <img src="<%= carsBrand.brandImg %>" width="20" class="link-list-img">
+                    <div class="link-list-title"><%= carsBrand.brandName %></div>
+                </a>
+            </li>
+            <% }); %>
+        </ul>
+    </div>
+    <% }); %>
+</div>

@@ -1,0 +1,18 @@
+<header class="bar bar-nav">
+    <a href="#car-brand" class="icon icon-left-nav pull-left"></a>
+    <h4 class="title">选 择 车 系</h4>
+</header>
+<div class="content">
+    <div class="list-group">
+        <div class="gray-title text-center"><%= carSeries.seleted.brandName %></div>
+        <ul class="list-link-view no-gutter">
+            <% carSeries.carsSeries.forEach(function (series) { %>
+            <li>
+                <a class="link-list-item" href="#car-models/<%= series.seriesId %>">
+                    <div class="link-list-title"><%= series.seriesName %></div>
+                </a>
+            </li>
+            <% }); %>
+        </ul>
+    </div>
+</div>

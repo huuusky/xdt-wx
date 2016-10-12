@@ -1,0 +1,55 @@
+<header class="bar bar-nav">
+    <a href="#my" class="icon icon-left-nav pull-left"></a>
+    <h4 class="title">我 的 预 约</h4>
+</header>
+<div class="content lighter-gray-bg padded">
+<% if (reservations.length > 0) { %>
+    <% reservations.forEach(function (reservation) { %>
+    <div class="reservation">
+        <div class="row no-horizontal-padded reservation-header">预约单号：<%= reservation.docNumber %></div>
+        <div class="reservation-body">
+            <div class="row no-padding">
+                <div class="col col-3">预约商家：</div>
+                <div class="col col-9"><%= reservation.shopName %></div>
+            </div>
+            <div class="row no-padding">
+                <div class="col col-3">预约项目</div>
+                <div class="col col-9 orange">
+                    <% reservation.serviceItems.forEach(function (service) { %>
+                    <p> • <%= service %></p>
+                    <% }); %>
+                </div>
+            </div>
+            <div class="row no-padding">
+                <div class="col col-3">车&nbsp;&nbsp;牌&nbsp;&nbsp;号：</div>
+                <div class="col col-9"><%= reservation.carLicenseNumber %></div>
+            </div>
+            <div class="row no-padding">
+                <div class="col col-3">服务顾问：</div>
+                <div class="col col-9"><%= reservation.consultantName %></div>
+            </div>
+            <div class="row no-padding">
+                <div class="col col-3">预约时间：</div>
+                <div class="col col-9"><%= reservation.appointmentTime %></div>
+            </div>
+            <div class="row no-padding">
+                <div class="col col-3">服务电话：</div>
+                <div class="col col-9"><a href="tel:<%= reservation.merchantPhone %>"><%= reservation.merchantPhone %></a></div>
+            </div>
+            <div class="row no-padding">
+                <div class="col col-3">商家地址：</div>
+                <div class="col col-9"><%= reservation.merchantAddress %></div>
+            </div>
+        </div>
+        <div class="row no-horizontal-padded reservation-footer">
+            <div class="col col-8"><%= reservation.gmtCreate %></div>
+            <div class="col col-4 text-right">
+                <button class="btn btn-tiny-warning inline cancel-reservation-btn" reservation-id="<%= reservation.reservationId %>">取消预约</button>
+            </div>
+        </div>
+    </div>
+    <% }); %>
+<% } else {  %>
+    <h5 class="text-center">您当前无预约订单</h5>
+<% } %>
+</div>

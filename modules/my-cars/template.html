@@ -1,0 +1,37 @@
+<header class="bar bar-nav">
+    <a href="#my" class="icon icon-left-nav pull-left"></a>
+    <h4 class="title">我 的 车 库</h4>
+</header>
+<footer class="bar bar-footer padded">
+    <a href="#car-brand" class="btn btn-primary">添 加 车 型</a>
+</footer>
+<div class="content">
+    <div class="my-car">
+        <ul class="list-link-view no-gutter">
+            <% myCars.forEach(function (car) { %>
+            <li class="my-car" user-car-id="<%= car.userCarId %>">
+                <div class="link-list-item">
+                    <img src="<%= car.brandImg %>" width="30" class="link-list-img">
+                    <div class="link-list-title">
+                        <p><%= car.brandName %></p>
+                        <p><%= car.carsName %></p>
+                    </div>
+                    <% if (car.isDefault === 1) { %>
+                    <span class="default-car-label">默认</span>
+                    <% } %>
+                </div>
+            </li>
+            <% }); %>
+        </ul>
+    </div>
+</div>
+<div class="modal" id="car-action-modal">
+    <div class="modal-backdrop"></div>
+    <div class="modal-content">
+        <div class="action-btn-group">
+            <button class="btn" id="set-default-car">设为默认车型</button>
+            <button class="btn" id="delete-car">删 除</button>
+        </div>
+        <button class="btn btn-primary" id="cancel-action-modal">取 消</button>
+    </div>
+</div>

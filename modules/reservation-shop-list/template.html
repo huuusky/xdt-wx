@@ -1,0 +1,38 @@
+<header class="bar bar-nav">
+    <a href="#reservation-a" class="icon icon-left-nav pull-left"></a>
+    <h4 class="title">选 择 商 家</h4>
+</header>
+<div class="content lighter-gray-bg">
+    <% shops.forEach(function (shop) { %>
+    <div class="shop" shop-id="<%= shop.shopId %>">
+        <div class="row no-horizontal-padded">
+            <div class="col col-4">
+                <img src="<%= shop.shopImg %>" class="shop-photo">
+            </div>
+            <div class="col col-8">
+                <p class="shop-name"><%= shop.shopName %></p>
+                <p class="shop-address"><%= shop.address %></p>
+                <p>
+                    <img src="assets/images/common/star-level-3.5.png" class="shop-star-level" width="64">
+                    <span class="shop-comment"><span><%= shop.evaluateTotal %></span>条</span>
+                </p>
+                <p>
+                    <span class="shop-type"><%= shop.shopType %></span>
+                    <% if (shop.payMethods.video) { %>
+                    <img src="assets/images/shop/monitor.png" class="support-payment monitor" width="18">
+                    <% } %>
+                    <% if (shop.payMethods.aliPay) { %>
+                    <img src="assets/images/shop/alipay.png" class="support-payment alipay" width="18">
+                    <% } %>
+                    <% if (shop.payMethods.weiPay) { %>
+                    <img src="assets/images/shop/wxpay.png" class="support-payment wxpay" width="18">
+                    <% } %>
+                    <% if (shop.payMethods.unionPay) { %>
+                    <img src="assets/images/shop/unionpay.png" class="support-payment unionpay" width="18">
+                    <% } %>
+                </p>
+            </div>
+        </div>
+    </div>
+    <% }); %>
+</div>

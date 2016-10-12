@@ -1,0 +1,25 @@
+<header class="bar bar-nav">
+    <a href="#my" class="icon icon-left-nav pull-left"></a>
+    <h4 class="title">订 单 支 付</h4>
+</header>
+<div class="content">
+    <div class="pay-order-info">
+        <div class="row"><%= orderPayData.title %></div>
+        <div class="row vertical-padded-small">
+            <div class="col col-3 vertical-padded-small">订单编号：</div>
+            <div class="col col-9 vertical-padded-small"><%= orderPayData.orderNo %></div>
+            <div class="col col-3 vertical-padded-small">支付金额：</div>
+            <div class="col col-9 vertical-padded-small price"><%= orderPayData.payAmount %>元</div>
+        </div>
+        <div class="row pay-countdown" id="pay-countdown">
+            <img src="assets/images/order/pay-countdown.png" width="18">
+            <span class="pay-countdown-text">支付剩余时间
+                <span id="remaining-hour">23</span>时<span id="remaining-minute">59</span>分<span id="remaining-second">59</span>秒
+            </span>
+        </div>
+    </div>
+    <!--<div class="gray-title">请 使 用 微 信 支 付</div>-->
+    <div class="payment">
+        <button class="btn btn-primary" id="payment-btn">微 信 支 付</button>
+    </div>
+</div>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <!-- QQ全屏、应用模式 -->
+    <meta name="x5-fullscreen" content="true">
+    <meta name="x5-page-mode" content="app">
+    <title>行得通</title>
+    <link rel="stylesheet" href="assets/stylesheets/xdtui-mobile.css">
+</head>
+<body>
+<div id="container">
+    <!-- View -->
+</div>
+<div class="toast" id="toast">
+    <div class="toast-content">
+        <p class="toast-text" id="toast-text"></p>
+    </div>
+</div>
+<script>
+    // ==================================================
+    // XDT-MOBILE 全局变量
+    // ==================================================
+
+    // 服务器 & 接口路径
+    // --------------------------------------------------
+//    var SERVER = "http://192.168.168.88:8080/mobile-web";
+    var SERVER = "http://www.xingdt.com/mobile-web";
+    var INTERFACE = {
+        login: SERVER + "/v2/auth/login", //------------------------------------- 注册或登录
+        logout: SERVER + "/v2/auth/logout", //----------------------------------- 登出
+        regCode: SERVER + "/identify_code/getRegCode", //------------------------ 获取验证码
+        myCars: SERVER + "/v2/cars/listCars", //--------------------------------- 查询我的车辆
+        setDefaultCar: SERVER + "/v2/cars/default", //--------------------------- 设置默认车型
+        deleteCar: SERVER + "/v2/cars/deleteCar", //----------------------------- 删除我的车辆
+        carBrands: SERVER + "/v2/cars/listCarsBrands", //------------------------ 查询所有汽车品牌
+        carSeries: SERVER + "/v2/cars/listCarsSeries", //------------------------ 查询当前品牌下的车系
+        carsModels: SERVER + "/v2/cars/listCarsModels", //----------------------- 查询当前车系下的车型
+        queryCar: SERVER + "/v2/cars/queryCar", //------------------------------- 根据车辆ID查询车辆信息
+        addCar: SERVER + "/v2/cars/addCar", //----------------------------------- 增加车辆
+        guidePrice: SERVER + "/v2/paint/getGuidePrice", //----------------------- 钣喷标准价格
+        paintShopList: SERVER + "/v2/paint/chooseMerchant", //------------------- 钣喷商家列表
+        shopPromotion: SERVER + "/v2/paint/getMerchantPromotion", //------------- 商家优惠详情
+        fillOrder: SERVER + "/v2/order/toSubmit", //----------------------------- 订单填写
+        submitOrder: SERVER + "/v2/order/submitOrder", //------------------------ 提交订单
+        wxSign: SERVER + "/wechatSign/sign", //---------------------------------- 订单填写
+        wxPay: SERVER + "/v2/pay/createMchUnifiedOrder", //---------------------- 微信支付
+        my: SERVER + "/v2/my/myProfile", //-------------------------------------- 我的
+        orderList: SERVER + "/v2/order/myOrders", //----------------------------- 订单列表
+        reservationItemList: SERVER + "/v2/reservation/listAvailableItems", //--- 可预约项目
+        reservationShopList: SERVER + "/v2/reservation/listMerchants", //-------- 可预约店铺列表
+        consultantList: SERVER + "/v2/reservation/listConsultants", //----------- 服务顾问列表
+        submitReservation: SERVER + "/v2/reservation/addReservation", //--------- 提交预约
+        myReservation: SERVER + "/v2/reservation/myReservation", //-------------- 我的列表
+        cancelReservation: SERVER + "/v2/reservation/cancelReservation" //------- 取消预约
+    };
+
+    // 全局变量 xdtGlobal
+    // --------------------------------------------------
+    var xdtGlobal = {
+        userInfo: null, // *********** 用户信息
+        selectedParts: { // ********** 钣喷部位
+            paintParts: [], // --- 喷漆部位
+            metalParts: []  // --- 钣金部位
+        },
+        orderSubmitData: { // ******** 订单提交数据
+            fromType: "", //------ 订单类型
+            shopId: 0, //--------- 店铺ID
+            carId: 0, //---------- 车型ID
+            services: [], //------ 选择的服务
+            couponId: 0, //------- 优惠券ID
+            appointment: "", //--- 预约时间
+            contactsName: "", //-- 联系人姓名
+            contactsPhone: "", //- 联系人电话
+            carLicenseNumber: "" //联系人车牌号
+        },
+        orderPayData: { // *********** 订单支付数据
+            orderNo: "", // ------ 订单号
+            title: "", // -------- 订单标题
+            itemDesc: "", // ----- 描述
+            payAmount: 0, // ----- 付款金额
+            zeroOrder: 0, // ----- 0元订单标识
+            createDate: "", // --- 订单提交时间
+            notifyUrl: { // ------ 支付回调
+                unionPay: "",
+                aliPay: "",
+                weixinPay: ""
+            }
+        },
+        reservationData: { // ************ 预约数据
+            carId: 0, //-------------- 车型ID
+            shopId: 0, //------------- 预约店铺ID
+            consultantId: 0, //------- 服务顾问ID
+            reservedServiceType: "", //服务类别
+            appointmentTime: "", //--- 预约时间
+            contactsName: "", //------ 联系人姓名
+            contactsPhone: "", //----- 联系人电话
+            carLicenseNumber: "", //-- 联系人车牌号
+            remarks: "" //------------ 车况描述
+        }
+    };
+
+    // ==================================================
+    // XDT-MOBILE 登录逻辑
+    // ==================================================
+    var userInfoStr = localStorage.getItem("xdtUserInfo");
+    var loginUrl = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxc01486c022f979f8" +
+            "&redirect_uri=http%3A%2F%2Fwww.xingdt.com%2Fxdt-mobile%2Flogin.html" +
+            "&response_type=code&scope=snsapi_base&state=0#wechat_redirect";
+    if (userInfoStr != null) {
+        xdtGlobal.userInfo = JSON.parse(userInfoStr);
+    } else {
+        location.replace(loginUrl);
+    }
+
+    // ==================================================
+    // XDT-MOBILE 公共方法
+    // ==================================================
+    function toast(toastText) {
+        var $toast = document.querySelector("#toast");
+        var $toastText = document.querySelector("#toast-text");
+
+        $toast.className = "toast show";
+        $toastText.innerText = toastText;
+
+        setTimeout(function () {
+            $toast.className = "toast";
+            $toastText.innerText = "";
+        }, 2000);
+    }
+</script>
+<script data-main="main" src="scripts/lib/require.js"></script>
+</body>
+</html>

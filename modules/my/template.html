@@ -1,0 +1,125 @@
+<header class="bar bar-nav">
+    <a class="icon icon-gear pull-right"></a>
+    <h4 class="title">我 的</h4>
+</header>
+<nav class="bar bar-tab">
+    <a href="#index" class="tab-item">
+        <span class="icon icon-home"></span>
+        <span class="tab-label">首页</span>
+    </a>
+    <a href="#my" class="tab-item active">
+        <span class="icon icon-person"></span>
+        <span class="tab-label">我的</span>
+    </a>
+</nav>
+<div class="content lighter-gray-bg">
+    <!-- 我的车库 -->
+    <div class="banner">
+        <a href="#my-cars" class="banner-link">
+            <% if (my.defaultCar != null) { %>
+            <div class="banner-content">
+                <div>
+                    <img src="<%= my.defaultCar.brandImg %>" class="car-brand-img">
+                </div>
+                <div>
+                    <p><%= my.defaultCar.brandName %></p>
+                    <p><%= my.defaultCar.carsName %></p>
+                </div>
+            </div>
+            <% } else { %>
+            <div class="add-car">
+                <img src="assets/images/my/add-car.png" width="18">
+            </div>
+            <% } %>
+        </a>
+    </div>
+    <!-- 我的订单 -->
+    <ul class="list-link-view no-gutter">
+        <li>
+            <a class="link-list-item" href="#order-list">
+                <div class="link-list-title">我的订单</div>
+                <div class="link-list-desc">查看全部订单</div>
+                <span class="list-right-nav icon icon-right-nav"></span>
+            </a>
+        </li>
+    </ul>
+    <div class="inline-remind-menu">
+        <div class="row">
+            <div class="col col-4 text-center">
+                <a href="#order-list">
+                    <% if (my.ordersToPay > 0) { %>
+                    <div class="remind-tip"><%= my.ordersToPay %></div>
+                    <% } %>
+                    <img src="assets//images/menu/my-menu-01.png" width="45">
+                </a>
+            </div>
+            <div class="col col-4 text-center">
+                <a href="#order-list">
+                    <% if (my.ordersToServe > 0) { %>
+                    <div class="remind-tip"><%= my.ordersToServe %></div>
+                    <% } %>
+                    <img src="assets//images/menu/my-menu-02.png" width="45">
+                </a>
+            </div>
+            <div class="col col-4 text-center">
+                <a href="#order-list">
+                    <% if (my.ordersToEvalute > 0) { %>
+                    <div class="remind-tip"><%= my.ordersToEvalute %></div>
+                    <% } %>
+                    <img src="assets//images/menu/my-menu-03.png" width="45">
+                </a>
+            </div>
+        </div>
+    </div>
+    <!-- 菜单区 -->
+    <ul class="list-link-view">
+        <!--<li>
+            <a href="#onsite" class="link-list-item">
+                <span class="link-list-icon icon icon-person"></span>
+                <div class="link-list-title">我的上门</div>
+                <div class="link-list-desc">上门接车查询</div>
+                <span class="list-right-nav icon icon-right-nav"></span>
+            </a>
+        </li>-->
+        <li>
+            <a href="#my-reservation" class="link-list-item">
+                <span class="link-list-icon icon icon-person"></span>
+                <div class="link-list-title">我的预约</div>
+                <div class="link-list-desc">快速预约查询</div>
+                <span class="list-right-nav icon icon-right-nav"></span>
+            </a>
+        </li>
+        <li>
+            <a href="#my-coupon" class="link-list-item">
+                <span class="link-list-icon icon icon-person"></span>
+                <div class="link-list-title">我的卡券</div>
+                <div class="link-list-desc">优惠券、红包等</div>
+                <span class="list-right-nav icon icon-right-nav"></span>
+            </a>
+        </li>
+    </ul>
+    <ul class="list-link-view">
+        <!--<li>
+            <a href="#illegal" class="link-list-item">
+                <span class="link-list-icon icon icon-search"></span>
+                <div class="link-list-title">违章查询</div>
+                <span class="list-right-nav icon icon-right-nav"></span>
+            </a>
+        </li>-->
+        <li>
+            <a href="#recommend" class="link-list-item">
+                <span class="link-list-icon icon icon-person"></span>
+                <div class="link-list-title">推荐有奖</div>
+                <div class="link-list-desc">推荐好友使用</div>
+                <span class="list-right-nav icon icon-right-nav"></span>
+            </a>
+        </li>
+        <li>
+            <a href="#about" class="link-list-item">
+                <span class="link-list-icon icon icon-person"></span>
+                <div class="link-list-title">关于行得通</div>
+                <span class="list-right-nav icon icon-right-nav"></span>
+            </a>
+        </li>
+    </ul>
+</div>

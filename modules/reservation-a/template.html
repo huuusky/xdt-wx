@@ -1,0 +1,34 @@
+<header class="bar bar-nav">
+    <a href="#index" class="icon icon-left-nav pull-left"></a>
+    <h4 class="title">快 速 预 约</h4>
+</header>
+<footer class="bar bar-footer padded">
+    <button class="btn btn-primary" id="gotoReservationShopList">下 一 步</button>
+</footer>
+<div class="content">
+    <div class="my-car">
+        <ul class="list-link-view no-gutter">
+            <li>
+                <a class="link-list-item" href="#">
+                    <img src="<%= reservationData.accustomedCar.brandImg %>" width="30" class="link-list-img">
+                    <div class="link-list-title">
+                        <p><%= reservationData.accustomedCar.carCode %></p>
+                    </div>
+                    <!--<span class="list-right-nav icon icon-right-nav"></span>-->
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="gray-title">预 约 项 目</div>
+    <div class="reservation-list">
+        <div class="row large-horizontal-padded">
+            <% reservationData.serviceTypes.forEach(function (item) { %>
+            <div class="col col-6 vertical-padded-small reservation-item" code="<%= item.code %>"><%= item.name %></div>
+            <% }); %>
+        </div>
+    </div>
+    <div class="gray-title">车 况 描 述</div>
+    <div class="car-condition-report">
+        <textarea id="car-condition-report" placeholder="简单描述车辆状况（限50字以内）"></textarea>
+    </div>
+</div>

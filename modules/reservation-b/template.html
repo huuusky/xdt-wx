@@ -1,0 +1,140 @@
+<header class="bar bar-nav">
+    <a href="#reservation-shop-list" class="icon icon-left-nav pull-left"></a>
+    <h4 class="title">快 速 预 约</h4>
+</header>
+<footer class="bar bar-footer padded">
+    <button class="btn btn-primary" id="submit-reservation-btn">预 约</button>
+</footer>
+<div class="content appointment-content">
+    <ul class="list-link-view no-gutter">
+        <li>
+            <div class="gray-title">预 约 商 家</div>
+            <div class="link-list-item">
+                <span class="link-list-icon icon icon-person"></span>
+                <div class="link-list-title"><%= shopPromotionData.merchant.shopName %></div>
+                <span class="list-right-nav icon icon-right-nav"></span>
+            </div>
+        </li>
+        <li>
+            <div class="gray-title">预 约 时 间</div>
+            <div class="link-list-item" id="appoint-time-link">
+                <span class="link-list-icon icon icon-person"></span>
+                <div class="link-list-title" id="appoint-time-text">请选择预约到店时间</div>
+                <span class="list-right-nav icon icon-right-nav"></span>
+            </div>
+        </li>
+        <li>
+            <div class="gray-title">服 务 顾 问</div>
+            <div class="link-list-item" id="consultant-link">
+                <span class="link-list-icon icon icon-person"></span>
+                <div class="link-list-title" id="consultant-text">请选择服务顾问</div>
+                <span class="list-right-nav icon icon-right-nav"></span>
+            </div>
+        </li>
+    </ul>
+</div>
+<div class="modal appoint-time-modal" id="appoint-time-modal">
+    <div class="modal-backdrop" id="appoint-time-modal-backdrop"></div>
+    <div class="modal-content">
+        <div class="modal-border">
+            <div id="timeline" class="timeline">
+                <div id="timeline-left-btn" class="timeline-left-btn timeline-btn">
+                    <span class="left-triangle"></span>
+                </div>
+                <div id="timeline-right-btn" class="timeline-right-btn timeline-btn">
+                    <span class="right-triangle"></span>
+                </div>
+                <ul id="timeline-list" class="timeline-list">
+                    <% dateList.forEach(function (item, index) { %>
+                    <% if (index === 1) { %>
+                    <li class="timeline-item-wrapper active">
+                        <% } else { %>
+                    <li class="timeline-item-wrapper">
+                        <% } %>
+                        <div class="timeline-item">
+                            <p class="month-day"><%= item.date %></p>
+                            <p class="day-of-week"><%= item.dayOfWeek %></p>
+                        </div>
+                    </li>
+                    <% }); %>
+                </ul>
+            </div>
+            <div class="appoint-time">
+                <div class="appoint-time-head">
+                    <div class="row no-horizontal-padded">
+                        <div class="col col-5">到店时间</div>
+                        <div class="col col-3">优惠方式</div>
+                        <div class="col col-4">优惠额度</div>
+                    </div>
+                </div>
+                <div class="appoint-time-content">
+                    <ul class="appoint-time-list" id="appoint-time-list">
+                        <% shopPromotionData.promotionWeekPlans.forEach(function (day) { %>
+                        <li class="appoint-day-time">
+                            <% day.promotionDayPlans.forEach(function (item, index) { %>
+                            <% if (index === 0) { %>
+                            <div class="row no-horizontal-padded appoint-time-item" appoint-time="<%= day.currentDate %> <%= item.timePeriod %>">
+                                <div class="col col-4 col-offset-1"><%= item.timePeriod %></div>
+                                <div class="col col-3"><%= item.promotionTypeName %></div>
+                                <div class="col col-4"><%= item.promotionValue %></div>
+                            </div>
+                            <% } else { %>
+                            <div class="row no-horizontal-padded appoint-time-item" appoint-time="<%= day.currentDate %> <%= item.timePeriod %>">
+                                <div class="col col-4 col-offset-1"><%= item.timePeriod %></div>
+                                <div class="col col-3"><%= item.promotionTypeName %></div>
+                                <div class="col col-4"><%= item.promotionValue %></div>
+                            </div>
+                            <% } %>
+                            <% }); %>
+                        </li>
+                        <% }); %>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="modal-btn-group">
+            <button class="btn btn-royal inline" id="appoint-confirm-btn">确 定</button>
+            <button class="btn btn-abandon inline" id="appoint-cancel-btn">取 消</button>
+        </div>
+    </div>
+</div>
+<div class="modal" id="consultant-modal">
+    <div class="modal-content full-fill">
+        <footer class="bar bar-footer padded">
+            <div class="row no-padding">
+                <div class="col col-6 horizontal-padded">
+                    <button class="btn btn-primary" id="random-distribute">随 机 分 配</button>
+                </div>
+                <div class="col col-6 horizontal-padded">
+                    <button class="btn btn-primary" id="confirm-consultant">确 认 选 择</button>
+                </div>
+            </div>
+        </footer>
+        <ul class="list-optional-view no-gutter">
+            <% consultants.forEach(function (consultant) { %>
+            <li class="consultant" consultant-id="<%= consultant.consultantId %>" consultant-name="<%= consultant.consultantName %>">
+                <div class="link-list-item">
+                    <div class="col col-4">
+                        <img src="<%= consultant.image %>" class="consultant-head" width="80">
+                    </div>
+                    <div class="col col-6">
+                        <p>
+                            <img src="assets/images/consultant/gold-medal.png" width="16">
+                            <img src="assets/images/consultant/gold-medal.png" width="16">
+                        </p>
+                        <p class="title"><%= consultant.consultantName %></p>
+                        <p>已接订单数 <%= consultant.receivedCount %></p>
+                        <p>
+                            <img src="assets/images/common/star-level-3.5.png" width="64">
+                            <span class="orange">3.5分</span>
+                        </p>
+                    </div>
+                    <div class="col col-2">
+                        <span class="select-icon"></span>
+                    </div>
+                </div>
+            </li>
+            <% }); %>
+        </ul>
+    </div>
+</div>

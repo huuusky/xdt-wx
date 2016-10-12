@@ -1,0 +1,203 @@
+<header class="bar bar-nav">
+    <a href="#paint-shop-list" class="icon icon-left-nav pull-left"></a>
+    <h4 class="title">订 单 填 写</h4>
+</header>
+<footer class="bar bar-footer bar-two-section">
+    <div class="row no-padding">
+        <div class="col col-8 padded text-section">结算金额：<span class="price" id="total-price"><%= orderPresetData.servicesTotalPrice %></span>元</div>
+        <div class="col col-4 padded action-section" id="submit-order">提交订单</div>
+    </div>
+</footer>
+<div class="content lighter-gray-bg">
+    <!-- 商家信息 -->
+    <div class="shop-info">
+        <div class="row shop-name-group">
+            <div class="col col-1 shop-icon"><img src="assets/images/shop/shop-icon.png" width="18"></div>
+            <div class="col col-2">商家：</div>
+            <div class="col col-9"><%= orderPresetData.shopName %></div>
+        </div>
+        <div class="shop-other-group">
+            <div class="row no-vertical-padding">
+                <div class="col col-1 shop-icon"><img src="assets/images/shop/location-icon.png" width="18"></div>
+                <div class="col col-2">地址：</div>
+                <div class="col col-9"><%= orderPresetData.address %></div>
+            </div>
+            <div class="row no-vertical-padding">
+                <div class="col col-2 col-offset-1">电话：</div>
+                <div class="col col-9"><a href="tel:<%= orderPresetData.telephone %>"><%= orderPresetData.telephone %></a></div>
+            </div>
+        </div>
+    </div>
+    <!-- 服务项目 -->
+    <div class="service-info">
+        <div class="row title no-horizontal-padded">服务项目</div>
+        <% orderPresetData.services.forEach(function (item) { %>
+        <div class="row">
+            <div class="col col-8"><%= item.attributeValue %></div>
+            <div class="col col-4 price text-right"><%= item.servicePrice %>元</div>
+        </div>
+        <% }); %>
+    </div>
+    <% if (orderPresetData.recommendServices.length > 0) { %>
+    <!-- 推荐服务 -->
+    <div class="recommend-service">
+        <div class="recommend-service-title">
+            <div>
+                <span>本店其他服务</span>
+                <img src="assets/images/common/recommend.png" width="14">
+            </div>
+            <span class="icon icon-up-nav"></span>
+        </div>
+        <div class="recommend-service-content">
+            <ul class="list-optional-view no-gutter">
+                <% orderPresetData.recommendServices.forEach(function (item) { %>
+                <li class="recommend-service-item" service-id="<%= item.serviceId %>" service-price="<%= item.servicePrice %>">
+                    <div class="row link-list-item">
+                        <div class="col col-1">
+                            <span class="select-icon"></span>
+                        </div>
+                        <div class="col col-8">
+                            <p><%= item.attributeValue %></p>
+                            <p><%= item.attributeDesc %></p>
+                        </div>
+                        <div class="col col-3 text-right price"><%= item.servicePrice %>元</div>
+                    </div>
+                </li>
+                <% }); %>
+            </ul>
+        </div>
+    </div>
+    <% } %>
+    <!-- 预约时间、优惠券 -->
+    <ul class="list-link-view">
+        <li id="appoint-time-link">
+            <div class="link-list-item horizontal-margin">
+                <div class="link-list-title">预约时间</div>
+                <div class="link-list-desc" id="appoint-time-text">请选择预约到店时间</div>
+                <span class="list-right-nav icon icon-right-nav"></span>
+            </div>
+        </li>
+        <li id="coupon-link">
+            <div class="link-list-item horizontal-margin">
+                <div class="link-list-title">优惠券</div>
+                <div class="price">-<span id="coupon-value">0</span>元</div>
+                <span class="list-right-nav icon icon-right-nav"></span>
+            </div>
+        </li>
+    </ul>
+    <!-- 联系人信息 -->
+    <div class="user-info">
+        <div class="row no-vertical-padding">
+            <div class="col col-3 vertical-padded"><label class="form-label"></label>联系人</div>
+            <div class="col col-9 vertical-padded">
+                <input type="text" class="form-input no-border" id="user-name" value="<%= orderPresetData.contactsName %>" placeholder="请输入姓名">
+            </div>
+        </div>
+        <div class="row no-vertical-padding">
+            <div class="col col-3 vertical-padded"><label class="form-label"></label>电&nbsp;&nbsp;&nbsp;&nbsp;话</div>
+            <div class="col col-9 vertical-padded">
+                <input type="tel" class="form-input no-border" id="user-cellphone" value="<%= orderPresetData.contactsPhone %>" placeholder="请输入11位手机号">
+            </div>
+        </div>
+        <div class="row no-vertical-padding">
+            <div class="col col-3 vertical-padded"><label class="form-label"></label>车牌号</div>
+            <div class="col col-9 vertical-padded">
+                <input type="text" class="form-input no-border" id="user-car-number" value="<%= orderPresetData.carLicenseNumber %>" placeholder="请输入车牌号码">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal appoint-time-modal" id="appoint-time-modal">
+    <div class="modal-backdrop"></div>
+    <div class="modal-content">
+        <div class="modal-border">
+            <div id="timeline" class="timeline">
+                <div id="timeline-left-btn" class="timeline-left-btn timeline-btn">
+                    <span class="left-triangle"></span>
+                </div>
+                <div id="timeline-right-btn" class="timeline-right-btn timeline-btn">
+                    <span class="right-triangle"></span>
+                </div>
+                <ul id="timeline-list" class="timeline-list">
+                    <% dateList.forEach(function (item, index) { %>
+                    <% if (index === 1) { %>
+                    <li class="timeline-item-wrapper active">
+                    <% } else { %>
+                    <li class="timeline-item-wrapper">
+                    <% } %>
+                        <div class="timeline-item">
+                            <p class="month-day"><%= item.date %></p>
+                            <p class="day-of-week"><%= item.dayOfWeek %></p>
+                        </div>
+                    </li>
+                    <% }); %>
+                </ul>
+            </div>
+            <div class="appoint-time">
+                <div class="appoint-time-head">
+                    <div class="row no-horizontal-padded">
+                        <div class="col col-5">到店时间</div>
+                        <div class="col col-3">优惠方式</div>
+                        <div class="col col-4">优惠额度</div>
+                    </div>
+                </div>
+                <div class="appoint-time-content">
+                    <ul class="appoint-time-list" id="appoint-time-list">
+                        <% shopPromotionData.promotionWeekPlans.forEach(function (day) { %>
+                        <li class="appoint-day-time">
+                            <% day.promotionDayPlans.forEach(function (item, index) { %>
+                            <% if (index === 0) { %>
+                            <div class="row no-horizontal-padded appoint-time-item" appoint-time="<%= day.currentDate %> <%= item.timePeriod %>">
+                                <div class="col col-4 col-offset-1"><%= item.timePeriod %></div>
+                                <div class="col col-3"><%= item.promotionTypeName %></div>
+                                <div class="col col-4"><%= item.promotionValue %></div>
+                            </div>
+                            <% } else { %>
+                            <div class="row no-horizontal-padded appoint-time-item" appoint-time="<%= day.currentDate %> <%= item.timePeriod %>">
+                                <div class="col col-4 col-offset-1"><%= item.timePeriod %></div>
+                                <div class="col col-3"><%= item.promotionTypeName %></div>
+                                <div class="col col-4"><%= item.promotionValue %></div>
+                            </div>
+                            <% } %>
+                            <% }); %>
+                        </li>
+                        <% }); %>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="modal-btn-group">
+            <button class="btn btn-royal inline" id="appoint-confirm-btn">确 定</button>
+            <button class="btn btn-abandon inline" id="appoint-cancel-btn">取 消</button>
+        </div>
+    </div>
+</div>
+<div class="modal coupon-modal" id="coupon-modal">
+    <div class="modal-backdrop"></div>
+    <div class="modal-content coupon-modal-content">
+        <div class="coupon-list">
+        <% if (orderPresetData.coupons.length > 0) { %>
+            <% orderPresetData.coupons.forEach(function (item) { %>
+            <div class="coupon" coupon-id="<%= item.couponId %>" coupon-value="<%= item.amount %>">
+                <div class="row vertical-padded-small">
+                    <div class="col col-6 vertical-padded-small"><%= item.title %></div>
+                    <div class="col col-6 vertical-padded-small text-right">¥<span><%= item.amount %></span></div>
+                    <% if (item.limitMoney != null) { %>
+                    <div class="col col-6 vertical-padded-small">满<%= item.limitMoney %>元减<%= item.amount %>元</div>
+                    <% } else { %>
+                    <div class="col col-6 vertical-padded-small">无条件使用</div>
+                    <% } %>
+                    <div class="col col-6 vertical-padded-small text-right">有效期至<%= item.expireDate %></div>
+                </div>
+            </div>
+            <% }); %>
+        <% } else { %>
+            <div class="text-center">您当前无可用优惠券！</div>
+        <% } %>
+        </div>
+        <div class="modal-btn-group">
+            <button class="btn btn-royal inline" id="coupon-confirm-btn">确 定</button>
+            <button class="btn btn-abandon inline" id="coupon-cancel-btn">取 消</button>
+        </div>
+    </div>
+</div>
